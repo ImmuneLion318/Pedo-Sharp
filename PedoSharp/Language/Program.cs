@@ -20,30 +20,6 @@ namespace Language
         public ulong UserId { get; set; }
     }
 
-    internal static class Extension
-    {
-        internal static T Modify<T>(this T Generic, Action<T> _Action)
-        {
-            _Action(Generic);
-            return Generic;
-        }
-    }
-
-    public class HTTPHandlers
-    {
-        private static StringContent HttpContent(string Data) =>
-            new StringContent(Data, Encoding.UTF8, "application/json");
-
-        private static readonly HttpClient httpClient = new HttpClient().Modify(client =>
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(""));
-
-        public static async Task<HttpResponseMessage> PostAsync(string URI, string Data) =>
-             await httpClient.PostAsync(URI, HttpContent(Data));
-
-        public static async Task<string> GetAsync(string URI) =>
-             await httpClient.GetStringAsync(URI);
-    }
-
     internal class Core
     {
         public static Member[] Members = new Member[]
